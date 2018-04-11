@@ -44,7 +44,11 @@ int main (int argc, char *argv[]) {
       Image a1(image1);
       Image a2(image2);
       
+      int Nrows = a1.getHeight();
+      int Ncols = a1.getWidth();
+      
       //MHMSHA056::add(a1, a2);
+      MHMSHA056::createImage(outputFile, MHMSHA056::add(a1, a2), Nrows, Ncols);
       
       
    } else if (option == "-s") {
