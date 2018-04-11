@@ -39,10 +39,12 @@ int main (int argc, char *argv[]) {
    //Determine function given option
    
    if (option == "-a"){
-      cout << "\nAdding images\n";
+      cout << "\nAdding images\n\n";
       //Create 2 image instances
       Image a1(image1);
       Image a2(image2);
+      
+      //MHMSHA056::add(a1, a2);
       
       
    } else if (option == "-s") {

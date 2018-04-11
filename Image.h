@@ -13,16 +13,18 @@ class Image {
       
    public:
       
-   Image(string imageName); //takes in image name and sets attributes
-   //~Image();   
+      Image(string imageName); //takes in image name and sets attributes
+      //~Image();   
       
-   class iterator {
+      void getImageDimensions();
+      
+      class iterator {
    
-      private:
-         unsigned char *ptr;
+         private:
+            unsigned char *ptr;
          
    
-   };
+      };
    
    
 };
