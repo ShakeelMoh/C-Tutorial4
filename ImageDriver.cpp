@@ -43,13 +43,14 @@ int main (int argc, char *argv[]) {
       //Create 2 image instances
       Image a1(image1);
       Image a2(image2);
-      
+      //unsigned char** sum = a1+a2;
       int Nrows = a1.getHeight();
       int Ncols = a1.getWidth();
       
+      
       //MHMSHA056::add(a1, a2);
       MHMSHA056::createImage(outputFile, MHMSHA056::add(a1, a2), Nrows, Ncols);
-      
+      //MHMSHA056::createImage(outputFile, sum, Nrows, Ncols);
       
    } else if (option == "-s") {
       cout << "\nSubtracting images\n";

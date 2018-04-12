@@ -39,12 +39,13 @@ class Image {
 
 namespace MHMSHA056 {
 
-   unsigned char** add(Image &l1, Image &l2);
+   unsigned char** operator+(Image l1, Image l2);
+   int** add(Image &l1, Image &l2);
    void subtract(Image l1, Image l2);
    void invert(Image l1);
    void mask (Image l1, Image l2);
    void threshold (Image l1, int threshold);
    
-   void createImage(string outputImage, unsigned char** finalImageData, int Nrows, int Ncols);
+   void createImage(string outputImage, int** finalImageData, int Nrows, int Ncols);
 
 };

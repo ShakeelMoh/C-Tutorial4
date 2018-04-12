@@ -6,6 +6,7 @@
 #include <sstream>
 #include <iostream>
 #include <fstream>
+#include <typeinfo>
 
 using namespace std;
 
@@ -76,8 +77,8 @@ Image::Image(string imageName){
    
    //Print out
    /*
-   for (int i = 0; i < Nrows; i++){
-      for (int j = 0; j < Ncols; j++){
+   for (int i = 0; i < 500; i++){
+      for (int j = 0; j < 220; j++){
          if (imageData[i][j] == 255){
             cout << "1"; //white
          } else if (imageData[i][j] == 0){
@@ -133,20 +134,48 @@ unsigned char** Image::getImagePixels(){
 
 //Define operational methods
 
-unsigned char** MHMSHA056::add(Image &l1, Image &l2){
+//operational add overload
+/*
+unsigned char** MHMSHA056::operator+(Image &l1, Image &l2){
+   unsigned char** sum = MHMSHA056::add(l1, l2);
+   return sum;
+   //return MHMSHA056::add(l1, l2);
+}
+*/
+
+int** MHMSHA056::add(Image &l1, Image &l2){
    cout << "Adding images method\n";
-   
-   unsigned char** sumPixels = new unsigned char*[l1.getHeight()];
-   for (int i = 0; i < l1.getHeight(); i++){
-      sumPixels[i] = new unsigned char[l1.getWidth()];
-   }
-   
-   for (int i = 0; i < l1.getHeight(); i++){
-      for (int j = 0; j < l1.getWidth(); j++){
-         sumPixels[i][j] = l1.getImagePixels()[i][j] + l2.getImagePixels()[i][j];
-         if (sumPixels[i][j] > 255){
-            sumPixels[i][j] = 255;
+   /*
+   for (int i = 0; i < 200; i++){
+      for (int j = 0; j < 220; j++){
+         cout << (int) l2.getImagePixels()[i][j];
+         
+         if (l2.getImagePixels()[i][j] == 255){
+            cout << "1"; //white
+         } else if (l2.getImagePixels()[i][j] == 0){
+            cout << "0"; //black
+         } else if (l2.getImagePixels()[i][j] < 255 && l2.getImagePixels()[i][j] > 0){
+            cout << "G";
          }
+         
+      }
+      cout << "\n";
+   }
+   */
+   
+   int** sumPixels = new int*[l1.getHeight()];
+   for (int i = 0; i < l1.getHeight(); i++){
+      sumPixels[i] = new int[l1.getWidth()];
+   }
+   for (int i = 0; i < l1.getHeight(); ++i){
+      for (int j = 0; j < l1.getWidth(); ++j){
+         sumPixels[i][j] = (int)l1.getImagePixels()[i][j] + (int)l2.getImagePixels()[i][j];//think error here
+         //cout << (unsigned char)sumPixels[i][j];
+         
+         if (sumPixels[i][j] > 255){
+            cout << "clamp";
+            sumPixels[i][j] = 255;
+         } 
       }
    }
    
@@ -172,20 +201,39 @@ void MHMSHA056::threshold (Image l1, int threshold){
    cout << "Thresholding image\n";
 }
 
-void MHMSHA056::createImage(string outputImage, unsigned char** finalImageData, int Nrows, int Ncols){
+void MHMSHA056::createImage(string outputImage, int** finalImageData, int Nrows, int Ncols){
    cout << "Creating image method\n";
    
-   ofstream outFile(outputImage);
-   outFile.close();
+   /*
+   for (int i = 200; i < 400; i++){
+      for (int j = 0; j < 220; j++){
+         if (finalImageData[i][j] == 255){
+            cout << "1"; //white
+         } else if (finalImageData[i][j] == 0){
+            cout << "0"; //black
+         } else {
+            cout << "X";
+         }
+      }
+      cout << "\n";
+   }
+   */
+   //ofstream outFile(outputImage);
+   //outFile.close();
         
    //write header information first
    
    ofstream pFile (outputImage, ios::binary);
+   
+   pFile << "P5\n";
+   pFile << "#This is a result image\n";
+   pFile << Nrows << " " << Ncols << "\n";
+   pFile << "255\n";
    for (int i = 0; i < Nrows; i++){
       for (int j = 0; j < Ncols; j++){
          pFile.write((char*)& finalImageData[i][j], 1);
       }
    }
-   
+   pFile.close();
    
 }
