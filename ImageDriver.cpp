@@ -47,8 +47,7 @@ int main (int argc, char *argv[]) {
       int Nrows = a1.getHeight();
       int Ncols = a1.getWidth();
       
-      
-      //MHMSHA056::add(a1, a2);
+
       MHMSHA056::createImage(outputFile, MHMSHA056::add(a1, a2), Nrows, Ncols);
       //MHMSHA056::createImage(outputFile, sum, Nrows, Ncols);
       
@@ -57,12 +56,10 @@ int main (int argc, char *argv[]) {
       //Create 2 image instances
       Image a1(image1);
       Image a2(image2);
-      //unsigned char** sum = a1+a2;
+
       int Nrows = a1.getHeight();
       int Ncols = a1.getWidth();
       
-      
-      //MHMSHA056::add(a1, a2);
       MHMSHA056::createImage(outputFile, MHMSHA056::subtract(a1, a2), Nrows, Ncols);
       //MHMSHA056::createImage(outputFile, sum, Nrows, Ncols);
       
@@ -70,7 +67,6 @@ int main (int argc, char *argv[]) {
       cout << "\nInverting image\n";
       //Create 2 image instances
       Image a1(image1);
-      //unsigned char** sum = a1+a2;
       int Nrows = a1.getHeight();
       int Ncols = a1.getWidth();
 
@@ -78,8 +74,25 @@ int main (int argc, char *argv[]) {
 
    } else if (option == "-l") {
       cout << "\nMasking image\n";
+      
+      //Create 2 image instances
+      Image a1(image1);
+      Image a2(image2);
+      int Nrows = a1.getHeight();
+      int Ncols = a1.getWidth();
+      
+      MHMSHA056::createImage(outputFile, MHMSHA056::mask(a1, a2), Nrows, Ncols);
+      
    } else if (option == "-t") {
       cout << "\nThresholding image\n";
+      
+      //Create 2 image instances
+      Image a1(image1);
+      int Nrows = a1.getHeight();
+      int Ncols = a1.getWidth();
+
+      MHMSHA056::createImage(outputFile, MHMSHA056::threshold(a1, thresholdVal), Nrows, Ncols);
+      
    } else {
       cout << "\nInvalid option selected\n";
    }

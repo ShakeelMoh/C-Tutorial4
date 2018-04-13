@@ -43,8 +43,8 @@ namespace MHMSHA056 {
    int** add(Image &l1, Image &l2);
    int** subtract(Image &l1, Image &l2);
    int** invert(Image &l1);
-   void mask (Image l1, Image l2);
-   void threshold (Image l1, int threshold);
+   int** mask (Image &l1, Image &l2);
+   int** threshold (Image &l1, int threshold);
    
    void createImage(string outputImage, int** finalImageData, int Nrows, int Ncols);
 

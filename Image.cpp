@@ -232,12 +232,62 @@ int** MHMSHA056::invert(Image &l1){
    
 }
 
-void MHMSHA056::mask (Image l1, Image l2){
-   cout << "Masking image\n";
+int** MHMSHA056::mask (Image &l1, Image &l2){
+   cout << "Masking image method\n";
+   
+   int** maskedPixels = new int*[l1.getHeight()];
+   for (int i = 0; i < l1.getHeight(); i++){
+      maskedPixels[i] = new int[l1.getWidth()];
+   }
+   for (int i = 0; i < l1.getHeight(); ++i){
+      for (int j = 0; j < l1.getWidth(); ++j){
+         if ((int)l2.getImagePixels()[i][j] == 255){
+            maskedPixels[i][j] = (int)l1.getImagePixels()[i][j];
+         } else {
+            maskedPixels[i][j] = (int)0;
+         }
+        
+         //Clamping
+         if (maskedPixels[i][j] > 255){
+            maskedPixels[i][j] = 255;
+         }
+         if (maskedPixels[i][j] < 0){
+            maskedPixels[i][j] = 0;
+         }
+      }
+   }
+   
+   return maskedPixels;
+   
 }
 
-void MHMSHA056::threshold (Image l1, int threshold){
-   cout << "Thresholding image\n";
+int** MHMSHA056::threshold (Image &l1, int threshold){
+   cout << "Thresholding image method\n";
+   
+   int** thresholdPixels = new int*[l1.getHeight()];
+   for (int i = 0; i < l1.getHeight(); i++){
+      thresholdPixels[i] = new int[l1.getWidth()];
+   }
+   for (int i = 0; i < l1.getHeight(); ++i){
+      for (int j = 0; j < l1.getWidth(); ++j){
+         if ((int)l1.getImagePixels()[i][j] > threshold){
+            thresholdPixels[i][j] = (int)255;
+         } else {
+            thresholdPixels[i][j] = (int)0;
+         }
+        
+         //Clamping
+         if (thresholdPixels[i][j] > 255){
+            thresholdPixels[i][j] = 255;
+         }
+         if (thresholdPixels[i][j] < 0){
+            thresholdPixels[i][j] = 0;
+         }
+      }
+   }
+   
+   return thresholdPixels;
+   
 }
 
 void MHMSHA056::createImage(string outputImage, int** finalImageData, int Nrows, int Ncols){
