@@ -53,9 +53,29 @@ int main (int argc, char *argv[]) {
       //MHMSHA056::createImage(outputFile, sum, Nrows, Ncols);
       
    } else if (option == "-s") {
-      cout << "\nSubtracting images\n";
+      cout << "\nSubtracting images\n\n";
+      //Create 2 image instances
+      Image a1(image1);
+      Image a2(image2);
+      //unsigned char** sum = a1+a2;
+      int Nrows = a1.getHeight();
+      int Ncols = a1.getWidth();
+      
+      
+      //MHMSHA056::add(a1, a2);
+      MHMSHA056::createImage(outputFile, MHMSHA056::subtract(a1, a2), Nrows, Ncols);
+      //MHMSHA056::createImage(outputFile, sum, Nrows, Ncols);
+      
    } else if (option == "-i") {
       cout << "\nInverting image\n";
+      //Create 2 image instances
+      Image a1(image1);
+      //unsigned char** sum = a1+a2;
+      int Nrows = a1.getHeight();
+      int Ncols = a1.getWidth();
+
+      MHMSHA056::createImage(outputFile, MHMSHA056::invert(a1), Nrows, Ncols);
+
    } else if (option == "-l") {
       cout << "\nMasking image\n";
    } else if (option == "-t") {

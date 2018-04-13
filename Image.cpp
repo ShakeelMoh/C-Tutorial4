@@ -18,6 +18,7 @@ Image::Image(string imageName){
    int Nrows;
    int Ncols;
    
+   //Read in image
    ifstream inFile(imageName, ios::binary);
    
    inFile.seekg(0, inFile.end);
@@ -42,7 +43,6 @@ Image::Image(string imageName){
          height = Nrows;
          width = Ncols;
          Image::getImageDimensions();
-         //cout << "Image Dimensions " << Nrows << "x" << Ncols << "\n";
          break;
       }
       cout << "Comment: " << line << "\n";
@@ -56,7 +56,6 @@ Image::Image(string imageName){
    //5th line onwards is the block of data
    //ss << inFile.rdbuf(); //need to restore something here...
    
-   //cout << "hello";
    //Array of pixels
    unsigned char pixel;
    
@@ -69,9 +68,7 @@ Image::Image(string imageName){
    
    for (int i = 0; i < Nrows; i++){
       for (int j = 0; j < Ncols; j++){
-         //ss >> imageData[i][j];
          inFile.read((char*) &imageData[i][j], 1);
-         //Values are not visible on console
       }
    }
    
@@ -99,6 +96,7 @@ Image::Image(string imageName){
    
 }
 
+//Get image dimensions
 void Image::getImageDimensions(){
    cout << "Height: " << height << "\n";
    cout << "Width: " << width << "\n";
@@ -110,6 +108,7 @@ int Image::getWidth(){
    return width;
 }
 
+//Print a given image block
 void Image::printBlock(){
    
    for (int i = 0; i < 200; i++){
@@ -173,24 +172,64 @@ int** MHMSHA056::add(Image &l1, Image &l2){
          //cout << (unsigned char)sumPixels[i][j];
          
          if (sumPixels[i][j] > 255){
-            cout << "clamp";
             sumPixels[i][j] = 255;
-         } 
+         }
+         if (sumPixels[i][j] < 0){
+            sumPixels[i][j] = 0;
+         }
       }
    }
    
-   
    return sumPixels;
    
+}
+
+int** MHMSHA056::subtract(Image &l1, Image &l2){
+   cout << "Subtracting images method\n";
+   
+   int** subPixels = new int*[l1.getHeight()];
+   for (int i = 0; i < l1.getHeight(); i++){
+      subPixels[i] = new int[l1.getWidth()];
+   }
+   for (int i = 0; i < l1.getHeight(); ++i){
+      for (int j = 0; j < l1.getWidth(); ++j){
+         subPixels[i][j] = (int)l1.getImagePixels()[i][j] - (int)l2.getImagePixels()[i][j];
+         
+         if (subPixels[i][j] > 255){
+            subPixels[i][j] = 255;
+         }
+         if (subPixels[i][j] < 0){
+            subPixels[i][j] = 0;
+         }
+      }
+   }
+   
+   return subPixels;
    
 }
 
-void MHMSHA056::subtract(Image l1, Image l2){
-   cout << "Subtracting images\n";
-}
-
-void MHMSHA056::invert(Image l1){
-   cout << "Inverting image\n";
+int** MHMSHA056::invert(Image &l1){
+   cout << "Inverting image method\n";
+   
+   int** invPixels = new int*[l1.getHeight()];
+   for (int i = 0; i < l1.getHeight(); i++){
+      invPixels[i] = new int[l1.getWidth()];
+   }
+   for (int i = 0; i < l1.getHeight(); ++i){
+      for (int j = 0; j < l1.getWidth(); ++j){
+         invPixels[i][j] = 255 - (int)l1.getImagePixels()[i][j];
+         
+         if (invPixels[i][j] > 255){
+            invPixels[i][j] = 255;
+         }
+         if (invPixels[i][j] < 0){
+            invPixels[i][j] = 0;
+         }
+      }
+   }
+   
+   return invPixels;
+   
 }
 
 void MHMSHA056::mask (Image l1, Image l2){

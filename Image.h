@@ -41,8 +41,8 @@ namespace MHMSHA056 {
 
    unsigned char** operator+(Image l1, Image l2);
    int** add(Image &l1, Image &l2);
-   void subtract(Image l1, Image l2);
-   void invert(Image l1);
+   int** subtract(Image &l1, Image &l2);
+   int** invert(Image &l1);
    void mask (Image l1, Image l2);
    void threshold (Image l1, int threshold);
    
