@@ -7,8 +7,6 @@
 
 using namespace std;
 
-
-
 int main (int argc, char *argv[]) {
    string programName = "";
    string option = "";
@@ -43,25 +41,25 @@ int main (int argc, char *argv[]) {
       //Create 2 image instances
       Image a1(image1);
       Image a2(image2);
-      //unsigned char** sum = a1+a2;
+      int** sum = a1+a2;
       int Nrows = a1.getHeight();
       int Ncols = a1.getWidth();
       
 
-      MHMSHA056::createImage(outputFile, MHMSHA056::add(a1, a2), Nrows, Ncols);
-      //MHMSHA056::createImage(outputFile, sum, Nrows, Ncols);
+      //MHMSHA056::createImage(outputFile, MHMSHA056::add(a1, a2), Nrows, Ncols);
+      MHMSHA056::createImage(outputFile, sum, Nrows, Ncols);
       
    } else if (option == "-s") {
       cout << "\nSubtracting images\n\n";
       //Create 2 image instances
       Image a1(image1);
       Image a2(image2);
-
+      int** sub = a1-a2;
       int Nrows = a1.getHeight();
       int Ncols = a1.getWidth();
       
-      MHMSHA056::createImage(outputFile, MHMSHA056::subtract(a1, a2), Nrows, Ncols);
-      //MHMSHA056::createImage(outputFile, sum, Nrows, Ncols);
+      //MHMSHA056::createImage(outputFile, MHMSHA056::subtract(a1, a2), Nrows, Ncols);
+      MHMSHA056::createImage(outputFile, sub, Nrows, Ncols);
       
    } else if (option == "-i") {
       cout << "\nInverting image\n";
@@ -69,8 +67,9 @@ int main (int argc, char *argv[]) {
       Image a1(image1);
       int Nrows = a1.getHeight();
       int Ncols = a1.getWidth();
-
-      MHMSHA056::createImage(outputFile, MHMSHA056::invert(a1), Nrows, Ncols);
+      int** inverted = !a1;
+      //MHMSHA056::createImage(outputFile, MHMSHA056::invert(a1), Nrows, Ncols);
+      MHMSHA056::createImage(outputFile, inverted, Nrows, Ncols);
 
    } else if (option == "-l") {
       cout << "\nMasking image\n";
@@ -80,8 +79,9 @@ int main (int argc, char *argv[]) {
       Image a2(image2);
       int Nrows = a1.getHeight();
       int Ncols = a1.getWidth();
-      
-      MHMSHA056::createImage(outputFile, MHMSHA056::mask(a1, a2), Nrows, Ncols);
+      int** mask = a1/a2;
+      //MHMSHA056::createImage(outputFile, MHMSHA056::mask(a1, a2), Nrows, Ncols);
+      MHMSHA056::createImage(outputFile, mask, Nrows, Ncols);
       
    } else if (option == "-t") {
       cout << "\nThresholding image\n";
@@ -90,8 +90,9 @@ int main (int argc, char *argv[]) {
       Image a1(image1);
       int Nrows = a1.getHeight();
       int Ncols = a1.getWidth();
-
-      MHMSHA056::createImage(outputFile, MHMSHA056::threshold(a1, thresholdVal), Nrows, Ncols);
+      int** thresh = a1*thresholdVal;
+      //MHMSHA056::createImage(outputFile, MHMSHA056::threshold(a1, thresholdVal), Nrows, Ncols);
+      MHMSHA056::createImage(outputFile, thresh, Nrows, Ncols);
       
    } else {
       cout << "\nInvalid option selected\n";

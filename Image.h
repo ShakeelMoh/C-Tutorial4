@@ -15,7 +15,7 @@ class Image {
    public:
       
       Image(string imageName); //takes in image name and sets attributes
-      //~Image();   
+      ~Image();   
       
       void getImageDimensions();
       int getHeight();
@@ -29,17 +29,29 @@ class Image {
             iterator(unsigned char *p): ptr(p){} //takes pointer and sets iterator pointer
          public:
             
-   
       };
+      /*
+       friend iterator begin(void){
+         return data.get();
+       }
+            /*
+            iterator end(){
+               return data[height*width+1];
+            } 
+            */
+       
       
-      
-   
+      friend int** operator+(Image &l1, Image &l2);//add
+      friend int** operator-(Image &l1, Image &l2);//sub
+      friend int** operator!(Image &l1);//invert
+      friend int** operator/(Image &l1, Image &l2);//mask
+      friend int** operator*(Image &l1, int threshold);//thresh
    
 };
 
 namespace MHMSHA056 {
 
-   unsigned char** operator+(Image l1, Image l2);
+   
    int** add(Image &l1, Image &l2);
    int** subtract(Image &l1, Image &l2);
    int** invert(Image &l1);

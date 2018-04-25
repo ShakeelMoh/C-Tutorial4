@@ -96,6 +96,15 @@ Image::Image(string imageName){
    
 }
 
+Image::~Image(){
+   for (int i = 0; i < height; i++){
+      delete imagePixels[i];
+   }
+   delete imagePixels;
+   
+   data.reset();
+}
+
 //Get image dimensions
 void Image::getImageDimensions(){
    cout << "Height: " << height << "\n";
@@ -134,13 +143,13 @@ unsigned char** Image::getImagePixels(){
 //Define operational methods
 
 //operational add overload
-/*
-unsigned char** MHMSHA056::operator+(Image &l1, Image &l2){
-   unsigned char** sum = MHMSHA056::add(l1, l2);
+
+int** operator+(Image &l1, Image &l2){
+   int** sum = MHMSHA056::add(l1, l2);
    return sum;
    //return MHMSHA056::add(l1, l2);
 }
-*/
+
 
 int** MHMSHA056::add(Image &l1, Image &l2){
    cout << "Adding images method\n";
@@ -184,6 +193,14 @@ int** MHMSHA056::add(Image &l1, Image &l2){
    
 }
 
+//operational subtract overload
+
+int** operator-(Image &l1, Image &l2){
+   int** sub = MHMSHA056::subtract(l1, l2);
+   return sub;
+}
+
+
 int** MHMSHA056::subtract(Image &l1, Image &l2){
    cout << "Subtracting images method\n";
    
@@ -208,6 +225,14 @@ int** MHMSHA056::subtract(Image &l1, Image &l2){
    
 }
 
+//operational invert overload
+
+int** operator!(Image &l1){
+   int** inverted = MHMSHA056::invert(l1);
+   return inverted;
+
+}
+
 int** MHMSHA056::invert(Image &l1){
    cout << "Inverting image method\n";
    
@@ -230,6 +255,14 @@ int** MHMSHA056::invert(Image &l1){
    
    return invPixels;
    
+}
+
+//operational mask overload
+
+int** operator/(Image &l1, Image &l2){
+   int** mask = MHMSHA056::mask(l1, l2);
+   return mask;
+
 }
 
 int** MHMSHA056::mask (Image &l1, Image &l2){
@@ -260,6 +293,13 @@ int** MHMSHA056::mask (Image &l1, Image &l2){
    return maskedPixels;
    
 }
+//operational threshold overload 
+int** operator*(Image &l1, int threshold){
+   int** thresh = MHMSHA056::threshold(l1, threshold);
+   return thresh;
+
+}
+
 
 int** MHMSHA056::threshold (Image &l1, int threshold){
    cout << "Thresholding image method\n";
@@ -324,5 +364,6 @@ void MHMSHA056::createImage(string outputImage, int** finalImageData, int Nrows,
       }
    }
    pFile.close();
+
    
 }
